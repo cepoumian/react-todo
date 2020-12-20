@@ -18,6 +18,19 @@ class ToDoList extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+
+  componentDidMount() {
+    fetch("https://altcademy-to-do-list-api.herokuapp.com/tasks?api_key=176")
+      .then(checkStatus)
+      .then(json)
+      .then((response) => {
+        console.log(response);
+        this.setState({tasks: response.tasks});
+      })
+      .catch((error) => {
+        console.log(error.message);
+      })
+  }
   
   handleChange(event) {
     this.setState({ new_task: event.target.value });
