@@ -33,11 +33,13 @@ class ToDoList extends React.Component {
     super(props);
     this.state = {
       new_task: '',
-      tasks: []
+      tasks: [],
+      error: ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.fetchTasks = this.fetchTasks.bind(this);
+    this.deleteTask = this.deleteTask.bind(this);
   }
 
   componentDidMount() {
@@ -94,6 +96,26 @@ class ToDoList extends React.Component {
     })
   }
 
+  deleteTask(id) {
+    if (!id) {
+      return;
+    }
+
+    fetch(`https://altcademy-to-do-list-api.herokuapp.com/tasks/${id}?api_key=176`,
+    {
+      method: "DELETE",
+      mode: "cors",      
+    })
+    .then(checkStatus)
+    .then(json)
+    .then((data) => {
+      this.fetchTasks(); // Updated tasks after deletion
+    })
+    .catch((error) => {
+      this.setState({ error: error.message });
+    })
+  }
+
   render() {
     const { new_task, tasks } = this.state;
 
@@ -103,7 +125,11 @@ class ToDoList extends React.Component {
           <div className="col-12">
             <h2 className="mb-3" >To Do List</h2>
             {tasks.length > 0 ? tasks.map((task) => {
-              return <Task key={task.id} task={task} />;
+              return (<Task 
+                key={task.id} 
+                task={task} 
+                onDelete={this.deleteTask}
+                />);
             }) : <p>no tasks here</p>}
             <form onSubmit={this.handleSubmit} className="form-inline my-4">
               <input
