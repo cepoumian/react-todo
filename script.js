@@ -15,8 +15,8 @@ class Task extends React.Component {
 
     return (
       <div className="row mb-1">
-        <p className="col">{content}</p>
-        <button onClick={() => onDelete(id)}>Delete</button>
+        <p className="col-9 lead">{content}</p>
+        <button className="mr-3" onClick={() => onDelete(id)}>Delete</button>
         <input
           className="d-inline-block mt-2"
           type="checkbox"
@@ -150,7 +150,7 @@ class ToDoList extends React.Component {
     const { new_task, tasks, filter } = this.state;
 
     return(
-      <div className="container">
+      <div className="container mt-4">
         <div className="row">
           <div className="col-12">
             <h2 className="mb-3" >To Do List</h2>
@@ -173,13 +173,13 @@ class ToDoList extends React.Component {
               );
             }) : <p>no tasks here</p>}
             <div className="mt-3">
-              <label>
+              <label className="mr-3">
                 <input type="checkbox" name="all" checked={filter === "all"} onChange={this.toggleFilter} /> All
               </label>
-              <label>
+              <label className="mr-3">
                 <input type="checkbox" name="active" checked={filter === "active"} onChange={this.toggleFilter} /> Active
               </label>
-              <label>
+              <label className="mr-3">
                 <input type="checkbox" name="completed" checked={filter === "completed"} onChange={this.toggleFilter} /> Completed
               </label>                            
             </div>
